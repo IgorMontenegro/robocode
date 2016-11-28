@@ -27,76 +27,76 @@ import java.nio.ByteBuffer;
  * @author Flemming N. Larsen (contributor)
  */
 public final class BulletMissedEvent extends Event {
-	private static final long serialVersionUID = 1L;
-	private final static int DEFAULT_PRIORITY = 60;
+    private static final long serialVersionUID = 1L;
+    private final static int DEFAULT_PRIORITY = 60;
 
-	private Bullet bullet;
+    private Bullet bullet;
 
-	/**
-	 * Called by the game to create a new {@code BulletMissedEvent}.
-	 *
-	 * @param bullet the bullet that missed
-	 */
-	public BulletMissedEvent(Bullet bullet) {
-		this.bullet = bullet;
-	}
+    /**
+     * Called by the game to create a new {@code BulletMissedEvent}.
+     *
+     * @param bullet the bullet that missed
+     */
+    public BulletMissedEvent(Bullet bullet) {
+        this.bullet = bullet;
+    }
 
-	/**
-	 * Returns the bullet that missed.
-	 *
-	 * @return the bullet that missed
-	 */
-	public Bullet getBullet() {
-		return bullet;
-	}
+    /**
+     * Returns the bullet that missed.
+     *
+     * @return the bullet that missed
+     */
+    public Bullet getBullet() {
+        return bullet;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	final int getDefaultPriority() {
-		return DEFAULT_PRIORITY;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    final int getDefaultPriority() {
+        return DEFAULT_PRIORITY;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	final void dispatch(IBasicRobot robot, IRobotStatics statics, Graphics2D graphics) {
-		IBasicEvents listener = robot.getBasicEventListener();
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    final void dispatch(IBasicRobot robot, IRobotStatics statics, Graphics2D graphics) {
+        IBasicEvents listener = robot.getBasicEventListener();
 
-		if (listener != null) {
-			listener.onBulletMissed(this);
-		}
-	}
+        if (listener != null) {
+            listener.onBulletMissed(this);
+        }
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	byte getSerializationType() {
-		return RbSerializer.BulletMissedEvent_TYPE;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    byte getSerializationType() {
+        return RbSerializer.BulletMissedEvent_TYPE;
+    }
 
-	static ISerializableHelper createHiddenSerializer() {
-		return new SerializableHelper();
-	}
+    static ISerializableHelper createHiddenSerializer() {
+        return new SerializableHelper();
+    }
 
-	private static class SerializableHelper implements ISerializableHelper {
-		public int sizeOf(RbSerializer serializer, Object object) {
-			return RbSerializer.SIZEOF_TYPEINFO + RbSerializer.SIZEOF_INT;
-		}
+    private static class SerializableHelper implements ISerializableHelper {
+        public int sizeOf(RbSerializer serializer, Object object) {
+            return RbSerializer.SIZEOF_TYPEINFO + RbSerializer.SIZEOF_INT;
+        }
 
-		public void serialize(RbSerializer serializer, ByteBuffer buffer, Object object) {
-			BulletMissedEvent obj = (BulletMissedEvent) object;
+        public void serialize(RbSerializer serializer, ByteBuffer buffer, Object object) {
+            BulletMissedEvent obj = (BulletMissedEvent) object;
 
-			serializer.serialize(buffer, obj.bullet.getBulletId());
-		}
+            serializer.serialize(buffer, obj.bullet.getBulletId());
+        }
 
-		public Object deserialize(RbSerializer serializer, ByteBuffer buffer) {
-			Bullet bullet = new Bullet(0, 0, 0, 0, null, null, false, buffer.getInt());
+        public Object deserialize(RbSerializer serializer, ByteBuffer buffer) {
+            Bullet bullet = new Bullet(0, 0, 0, 0, null, null, false, buffer.getInt());
 
-			return new BulletMissedEvent(bullet);
-		}
-	}
+            return new BulletMissedEvent(bullet);
+        }
+    }
 }

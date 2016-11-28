@@ -26,73 +26,73 @@ import java.nio.ByteBuffer;
  * @author Flemming N. Larsen (contributor)
  */
 public final class DeathEvent extends Event {
-	private static final long serialVersionUID = 1L;
-	private final static int DEFAULT_PRIORITY = -1; // System event -> cannot be changed!
+    private static final long serialVersionUID = 1L;
+    private final static int DEFAULT_PRIORITY = -1; // System event -> cannot be changed!
 
-	/**
-	 * Called by the game to create a new DeathEvent.
-	 */
-	public DeathEvent() {
-		super();
-	}
+    /**
+     * Called by the game to create a new DeathEvent.
+     */
+    public DeathEvent() {
+        super();
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public final int getPriority() {
-		return DEFAULT_PRIORITY;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final int getPriority() {
+        return DEFAULT_PRIORITY;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	final int getDefaultPriority() {
-		return DEFAULT_PRIORITY;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    final int getDefaultPriority() {
+        return DEFAULT_PRIORITY;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	final void dispatch(IBasicRobot robot, IRobotStatics statics, Graphics2D graphics) {
-		IBasicEvents listener = robot.getBasicEventListener();
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    final void dispatch(IBasicRobot robot, IRobotStatics statics, Graphics2D graphics) {
+        IBasicEvents listener = robot.getBasicEventListener();
 
-		if (listener != null) {
-			listener.onDeath(this);
-		}
-	}
+        if (listener != null) {
+            listener.onDeath(this);
+        }
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	final boolean isCriticalEvent() {
-		return true;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    final boolean isCriticalEvent() {
+        return true;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	byte getSerializationType() {
-		return RbSerializer.DeathEvent_TYPE;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    byte getSerializationType() {
+        return RbSerializer.DeathEvent_TYPE;
+    }
 
-	static ISerializableHelper createHiddenSerializer() {
-		return new SerializableHelper();
-	}
+    static ISerializableHelper createHiddenSerializer() {
+        return new SerializableHelper();
+    }
 
-	private static class SerializableHelper implements ISerializableHelper {
-		public int sizeOf(RbSerializer serializer, Object object) {
-			return RbSerializer.SIZEOF_TYPEINFO;
-		}
+    private static class SerializableHelper implements ISerializableHelper {
+        public int sizeOf(RbSerializer serializer, Object object) {
+            return RbSerializer.SIZEOF_TYPEINFO;
+        }
 
-		public void serialize(RbSerializer serializer, ByteBuffer buffer, Object object) {}
+        public void serialize(RbSerializer serializer, ByteBuffer buffer, Object object) {}
 
-		public Object deserialize(RbSerializer serializer, ByteBuffer buffer) {
-			return new DeathEvent();
-		}
-	}
+        public Object deserialize(RbSerializer serializer, ByteBuffer buffer) {
+            return new DeathEvent();
+        }
+    }
 }
